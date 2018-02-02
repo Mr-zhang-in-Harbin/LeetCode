@@ -1,0 +1,27 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int rob(TreeNode* root) {
+        return max(Do(root),Dont(root));
+    }
+    int Do(TreeNode* root) {
+        if (!root)
+            return 0;
+        return root->val + Dont(root->left) + Dont(root->right);
+    }
+    int Dont(TreeNode* root) {
+        if (!root)
+            return 0;
+        int left = max(Do(root->left),Dont(root->left));
+        int right = max(Do(root->right),Dont(root->right));
+        return left + right;
+    }
+};
